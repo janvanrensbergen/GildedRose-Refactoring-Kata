@@ -5,6 +5,10 @@ import com.gildedrose.Item;
 
 public class ItemFixtures {
 
+    public static ItemBuilder item(final String name) {
+        return new ItemBuilder(name);
+    }
+
     public static ItemBuilder defaultItem() {
         return new ItemBuilder("+5 Dexterity Vest");
     }

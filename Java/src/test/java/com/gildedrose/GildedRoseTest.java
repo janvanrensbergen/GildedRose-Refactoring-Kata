@@ -1,75 +1,34 @@
 package com.gildedrose;
 
 
-import org.junit.jupiter.api.Test;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-import static com.gildedrose.GildedRoseFixtures.*;
-import static com.gildedrose.ItemFixtures.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.gildedrose.GildedRoseFixtures.gildedRose;
+import static com.gildedrose.ItemFixtures.item;
 
 public class GildedRoseTest {
 
 
-    @Test
-    public void foo() {
-        Item[] items = new Item[]{new Item("foo", 0, 0)};
-        GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        assertEquals("foo", app.items[0].name);
-    }
-
-
-    @Test
-    void thatDefaultItemSellIn_WillDecreasesByOneAfterUpdate() {
+    @ParameterizedTest(name = "Given: An item \"{0}\" with sellIn \"{1}\" and quality \"{2}\" When: quality is updated Then: sellIn should be \"{3}\" And quality should be \"{4}\"")
+    @CsvSource(value = {
+            "+5 Dexterity Vest | 10 | 20 |  9 | 19",
+            "+5 Dexterity Vest |  0 | 20 | -1 | 18",
+            "+5 Dexterity Vest | 10 |  0 |  9 |  0"
+    }, delimiter = '|')
+    void thatGildedRoseUpdatesSellInAndQualityAsExpected(final String name, final int sellIn, final int quality, final int expectedSellIn, final int expectedQuality) {
 
         //Given:
-        final var defaultItem = defaultItem().withSellIn(10).build();
+        final var item = item(name).withSellIn(sellIn).withQuality(quality).build();
 
         //When:
-        gildedRose(defaultItem).updateQuality();
+        gildedRose(item).updateQuality();
 
         //Then:
-        assertThat(defaultItem.sellIn).isEqualTo(9);
-
-    }
-
-    @Test
-    void thatDefaultItemQuality_WillDecreaseByOneAfterUpdate() {
-
-        //Given:
-        final var defaultItem = defaultItem().withQuality(20).build();
-
-        //When:
-        gildedRose(defaultItem).updateQuality();
-
-        //Then:
-        assertThat(defaultItem.quality).isEqualTo(19);
-    }
-
-    @Test
-    void thatDefaultItemQuality_WillDecreaseByTwoWhenSellInIsPassed() {
-
-        //Given:
-        final var defaultItem = defaultItem().withSellIn(0).withQuality(20).build();
-
-        //When:
-        gildedRose(defaultItem).updateQuality();
-
-        //Then:
-        assertThat(defaultItem.quality).isEqualTo(18);
-    }
-
-    @Test
-    void thatDefaultItemQuality_WillNeverBeNegative() {
-
-        //Given:
-        final var defaultItem = defaultItem().withQuality(0).build();
-
-        //When:
-        gildedRose(defaultItem).updateQuality();
-
-        //Then:
-        assertThat(defaultItem.quality).isEqualTo(0);
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(item.sellIn).isEqualTo(expectedSellIn);
+            softly.assertThat(item.quality).isEqualTo(expectedQuality);
+        });
     }
 }
