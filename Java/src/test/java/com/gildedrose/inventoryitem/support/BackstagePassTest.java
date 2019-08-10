@@ -76,6 +76,26 @@ class BackstagePassTest {
     }
 
     @Test
+    void thatMqxQualityIsFifty() {
+
+        //Given:
+        final var item = backstagePass().withSellIn(20).withQuality(50).build();
+        final var otherItem = backstagePass().withSellIn(10).withQuality(49).build();
+        final var yetAnOtherItem = backstagePass().withSellIn(5).withQuality(48).build();
+
+        //When:
+        of(item, otherItem, yetAnOtherItem).forEach( it -> new BackstagePass(it).ageOneDay());
+
+        //Then:
+        assertSoftly(softly -> {
+            softly.assertThat(item.quality).isEqualTo(50);
+            softly.assertThat(otherItem.quality).isEqualTo(50);
+            softly.assertThat(yetAnOtherItem.quality).isEqualTo(50);
+        });
+
+    }
+
+    @Test
     void thatQualityDropsToZeroWhenTheConcertIsPassed() {
 
         //Given:

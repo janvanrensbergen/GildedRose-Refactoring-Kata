@@ -1,12 +1,12 @@
 package com.gildedrose;
 
 
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static com.gildedrose.GildedRoseFixtures.gildedRose;
 import static com.gildedrose.ItemFixtures.item;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class GildedRoseTest {
 
@@ -28,8 +28,12 @@ class GildedRoseTest {
             " Backstage passes to a TAFKAL80ETC concert |     10 |      20 |               9 |               22 ",
             " Backstage passes to a TAFKAL80ETC concert |      9 |      20 |               8 |               22 ",
             " Backstage passes to a TAFKAL80ETC concert |      5 |      20 |               4 |               23 ",
+            " Backstage passes to a TAFKAL80ETC concert |     15 |      50 |              14 |               50 ",
+            " Backstage passes to a TAFKAL80ETC concert |     10 |      49 |               9 |               50 ",
+            " Backstage passes to a TAFKAL80ETC concert |      5 |      48 |               4 |               50 ",
             " Backstage passes to a TAFKAL80ETC concert |      0 |      20 |              -1 |                0 ",
-            "                        Conjured Mana Cake |     10 |      20 |               9 |               19 "
+            "                        Conjured Mana Cake |     10 |      20 |               9 |               18 ",
+            "                        Conjured Mana Cake |     10 |       1 |               9 |                0 "
 
     })
     void thatItemsQualityIsUpdatedAsSpecifiedAfterOneDay(final String name, final int sellIn, final int quality, final int expectedSellIn, final int expectedQuality) {
@@ -41,7 +45,7 @@ class GildedRoseTest {
         gildedRose(item).updateQuality();
 
         //Then:
-        SoftAssertions.assertSoftly(softly -> {
+        assertSoftly(softly -> {
             softly.assertThat(item.sellIn).isEqualTo(expectedSellIn);
             softly.assertThat(item.quality).isEqualTo(expectedQuality);
         });

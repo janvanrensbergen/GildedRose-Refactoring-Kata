@@ -3,6 +3,8 @@ package com.gildedrose.inventoryitem.support;
 import com.gildedrose.Item;
 import com.gildedrose.inventoryitem.IncreasingQualityInventoryItem;
 
+import static java.lang.Math.*;
+
 public class BackstagePass implements IncreasingQualityInventoryItem {
 
     private static final int BUMP_QUALITY_ONCE = 1;
@@ -19,14 +21,20 @@ public class BackstagePass implements IncreasingQualityInventoryItem {
     public void increaseQuality(Item item) {
         if(concertIsPassed(item)) {
             item.quality = 0;
-        }else if (concertInXDaysOrLess(item, 5)) {
-            item.quality += BUMP_QUALITY_THRICE;
-        } else if (concertInXDaysOrLess(item, 10)) {
-            item.quality += BUMP_QUALITY_TWICE;
         } else {
-            item.quality += BUMP_QUALITY_ONCE;
+            item.quality = min(bumpQuality(item), 50);
         }
 
+    }
+
+    private int bumpQuality(Item item) {
+        if (concertInXDaysOrLess(item, 5)) {
+            return item.quality + BUMP_QUALITY_THRICE;
+        } else if (concertInXDaysOrLess(item, 10)) {
+            return item.quality + BUMP_QUALITY_TWICE;
+        } else {
+            return item.quality + BUMP_QUALITY_ONCE;
+        }
     }
 
     private boolean concertInXDaysOrLess(Item item, int days) {
