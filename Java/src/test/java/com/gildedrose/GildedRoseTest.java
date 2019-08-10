@@ -60,4 +60,16 @@ public class GildedRoseTest {
         assertThat(defaultItem.quality).isEqualTo(18);
     }
 
+    @Test
+    void thatDefaultItemQuality_WillNeverBeNegative() {
+
+        //Given:
+        final var defaultItem = defaultItem().withQuality(0).build();
+
+        //When:
+        gildedRose(defaultItem).updateQuality();
+
+        //Then:
+        assertThat(defaultItem.quality).isEqualTo(0);
+    }
 }
