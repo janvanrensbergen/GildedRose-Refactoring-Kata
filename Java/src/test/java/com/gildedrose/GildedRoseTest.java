@@ -1,8 +1,10 @@
 package com.gildedrose;
 
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GildedRoseTest {
@@ -14,6 +16,21 @@ public class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("foo", app.items[0].name);
+    }
+
+
+    @Test
+    void thatDefaultItemSellInDecreasesByOneAfterUpdate() {
+
+        //Given:
+        final Item defaultItem = new Item("+5 Dexterity Vest", 10, 20);
+
+        //When:
+        new GildedRose(new Item[]{defaultItem}).updateQuality();
+
+        //Then:
+        assertThat(defaultItem.sellIn).isEqualTo(9);
+
     }
 
 }
