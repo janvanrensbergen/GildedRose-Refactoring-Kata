@@ -3,6 +3,8 @@ package com.gildedrose;
 
 import org.junit.jupiter.api.Test;
 
+import static com.gildedrose.GildedRoseFixtures.*;
+import static com.gildedrose.ItemFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,10 +24,10 @@ public class GildedRoseTest {
     void thatDefaultItemSellIn_WillDecreasesByOneAfterUpdate() {
 
         //Given:
-        final Item defaultItem = new Item("+5 Dexterity Vest", 10, 20);
+        final var defaultItem = defaultItem().withSellIn(10).build();
 
         //When:
-        new GildedRose(new Item[]{defaultItem}).updateQuality();
+        gildedRose(defaultItem).updateQuality();
 
         //Then:
         assertThat(defaultItem.sellIn).isEqualTo(9);
@@ -36,10 +38,10 @@ public class GildedRoseTest {
     void thatDefaultItemQuality_WillDecreaseByOneAfterUpdate() {
 
         //Given:
-        final Item defaultItem = new Item("+5 Dexterity Vest", 10, 20);
+        final var defaultItem = defaultItem().withQuality(20).build();
 
         //When:
-        new GildedRose(new Item[]{defaultItem}).updateQuality();
+        gildedRose(defaultItem).updateQuality();
 
         //Then:
         assertThat(defaultItem.quality).isEqualTo(19);
@@ -49,10 +51,10 @@ public class GildedRoseTest {
     void thatDefaultItemQuality_WillDecreaseByTwoWhenSellInIsPassed() {
 
         //Given:
-        final Item defaultItem = new Item("+5 Dexterity Vest", 0, 20);
+        final var defaultItem = defaultItem().withSellIn(0).withQuality(20).build();
 
         //When:
-        new GildedRose(new Item[]{defaultItem}).updateQuality();
+        gildedRose(defaultItem).updateQuality();
 
         //Then:
         assertThat(defaultItem.quality).isEqualTo(18);
