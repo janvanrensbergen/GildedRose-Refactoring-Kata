@@ -32,4 +32,5 @@ class LegendaryItemTest {
         //Then:
         assertThat(item.quality).isEqualTo(80);
     }
+
 }

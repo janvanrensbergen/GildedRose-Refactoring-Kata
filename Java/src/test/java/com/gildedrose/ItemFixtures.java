@@ -10,11 +10,23 @@ public class ItemFixtures {
     }
 
     public static ItemBuilder normalItem() {
-        return new ItemBuilder("+5 Dexterity Vest");
+        return item("+5 Dexterity Vest");
     }
 
     public static ItemBuilder legendaryItem() {
-        return new ItemBuilder("Sulfuras, Hand of Ragnaros");
+        return item("Sulfuras, Hand of Ragnaros");
+    }
+
+    public static ItemBuilder agedBrie() {
+        return item("Aged Brie");
+    }
+
+    public static ItemBuilder backstagePass() {
+        return item("Backstage passes to a TAFKAL80ETC concert");
+    }
+
+    public static ItemBuilder conjuredItem() {
+        return item("Conjured Mana Cake");
     }
 
     public static class ItemBuilder {

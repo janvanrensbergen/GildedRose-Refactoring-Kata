@@ -7,6 +7,9 @@ import static java.lang.Math.*;
 
 public class NormalItem implements DecreasingQualityInventoryItem {
 
+    private static final int DROP_QUALITY = 1;
+    private static final int DOUBLE_DROP_QUALITY = DROP_QUALITY * 2;
+
     private final Item item;
 
     NormalItem(Item item) {
@@ -15,7 +18,7 @@ public class NormalItem implements DecreasingQualityInventoryItem {
 
     @Override
     public void decreaseQuality(Item item) {
-        item.quality = max(0, item.quality - (isPassed(item) ? 2 : 1));
+        item.quality = max(0, dropQuality(item.quality, item.sellIn));
     }
 
     @Override
@@ -23,7 +26,11 @@ public class NormalItem implements DecreasingQualityInventoryItem {
         return item;
     }
 
-    private boolean isPassed(Item item) {
-        return item.sellIn < 0;
+    private int dropQuality(int quality, int sellIn) {
+        return quality - (isPassed(sellIn) ? DOUBLE_DROP_QUALITY : DROP_QUALITY);
+    }
+
+    private boolean isPassed(int sellIn) {
+        return sellIn < 0;
     }
 }
