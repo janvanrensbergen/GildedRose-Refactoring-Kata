@@ -9,8 +9,12 @@ public class ItemFixtures {
         return new ItemBuilder(name);
     }
 
-    public static ItemBuilder defaultItem() {
+    public static ItemBuilder normalItem() {
         return new ItemBuilder("+5 Dexterity Vest");
+    }
+
+    public static ItemBuilder legendaryItem() {
+        return new ItemBuilder("Sulfuras, Hand of Ragnaros");
     }
 
     public static class ItemBuilder {
