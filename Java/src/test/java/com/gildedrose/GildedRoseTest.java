@@ -33,6 +33,7 @@ class GildedRoseTest {
             " Backstage passes to a TAFKAL80ETC concert |      5 |      48 |               4 |               50 ",
             " Backstage passes to a TAFKAL80ETC concert |      0 |      20 |              -1 |                0 ",
             "                        Conjured Mana Cake |     10 |      20 |               9 |               18 ",
+            "                        Conjured Mana Cake |     -1 |      20 |              -2 |               16 ",
             "                        Conjured Mana Cake |     10 |       1 |               9 |                0 "
 
     })
